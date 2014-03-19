@@ -1,0 +1,26 @@
+<html>
+
+{% extends "base.html" %}
+
+{% block title %} AddWiki {% endblock %}
+
+{% include 'header.html' %}
+
+{% block content %}
+
+    <form method="post">
+
+        <label>
+
+            <div>Content</div>
+            <textarea name="content"></textarea>
+
+        </label>
+
+        <input type="submit">
+
+    </form>
+
+{% endblock %}
+
+</html>

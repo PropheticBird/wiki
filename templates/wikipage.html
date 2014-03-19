@@ -1,0 +1,19 @@
+<html>
+
+{% extends "base.html" %}
+
+{% block title %} Wiki {% endblock %}
+
+{% include "header.html" %}
+
+{% block content %}
+
+    <div>
+
+    {{params.content | safe}}
+
+    </div>
+
+{% endblock %}
+
+</html>
