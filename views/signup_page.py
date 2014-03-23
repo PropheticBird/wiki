@@ -1,5 +1,5 @@
-from model import save_user_to_db
-from utils import validate, make_cookie
+from model import User
+from utils import validate
 from simple_handler import SimpleHandler
 
 
@@ -8,7 +8,7 @@ class SignupPage(SimpleHandler):
     tempate = 'signup.html'
 
     def get(self):
-        self.render_response(self.tempate)
+        self.render_response(self.tempate, params=None)
 
     def post(self):
         '''This function handles the signup form and vlidates user input.'''
@@ -22,12 +22,11 @@ class SignupPage(SimpleHandler):
         errors = validate(username, password, verify, email)
 
         if len(errors) != 0:
-            self.render_response(self.tempate, **errors)
+            self.render_response(self.tempate, params=None, **errors)
         else:
-            save_user_to_db(username, password, email)
+            u = User.register(username, password, email)
+            u.put()
 
-            # set cookies
-            cookie = make_cookie(username)
-            self.response.set_cookie('username', cookie, path='/')
+            self.login(u)
 
             self.redirect(self.uri_for('home'))

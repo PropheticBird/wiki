@@ -1,5 +1,3 @@
-from webapp2 import uri_for
-
 from simple_handler import SimpleHandler
 
 
@@ -8,5 +6,6 @@ class Logout(SimpleHandler):
         ''' This function implements logout functionality
         by clearing the cookies and redirecting to the signup page '''
 
-        self.response.delete_cookie('username', path='/')
-        self.redirect(uri_for('login'))
+        next_url = self.request.headers.get('referer', '/')
+        self.logout()
+        self.redirect(next_url)

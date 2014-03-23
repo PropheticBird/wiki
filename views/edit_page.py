@@ -1,38 +1,41 @@
-from google.appengine.api import memcache
-
 from simple_handler import SimpleHandler
 from model import Page
-
-from utils import is_set_cookie
 
 
 class EditPage(SimpleHandler):
 
-    def get(self, page):
+    def get(self, link):
 
-        if is_set_cookie(self, 'username'):
-            params = {
-                'edit_name': 'view',
-                'logout_name': 'logout',
-                'edit_link': self.uri_for('wiki', page=page),
-                'logout_link': self.uri_for('logout')
-            }
-            self.render_response('newpage.html', params=params)
-        else:
+        if not self.user:
             self.redirect(self.uri_for('login'))
 
-    def post(self, page):
+        else:
+            page = None
+            page = Page.by_path(link)
+
+            params = {
+                'name': self.user.username,
+                'name_ev': 'view',
+                'name_lio': 'logout',
+                'link_ev': self.uri_for('wiki', link=link),
+                'link_lio': self.uri_for('logout')
+            }
+
+            self.render_response('newpage.html', page=page, params=params)
+
+    def post(self, link):
+        if not self.user:
+            self.notfound()
+
         content = self.request.get('content')
+        print content
 
         if content:
-            p = Page(link=page, content=content)
+            p = Page(parent=Page.parent_key(link), link=link, content=content)
             p.put()
 
-            old_content = memcache.get(key=page)
-            if old_content:
-                memcache.set(key=page, value=str(content))
+            self.redirect(self.uri_for('wiki', link=link))
 
-            memcache.add(key=page, value=str(content))
-            self.redirect(self.uri_for('wiki', page=page))
-
-        #ToDo:Add else branch and handle empty content
+        else:
+            error = 'You must add some content before submitting.'
+            self.render_response('newpage.html', error=error)

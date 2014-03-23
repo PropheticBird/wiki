@@ -23,11 +23,11 @@ def make_cookie(username):
     return make_secure_val(str(username))
 
 
-def is_set_cookie(handler, name):
+def read_cookie(handler, name):
     username_cookie_str = handler.request.cookies.get(name)
     if username_cookie_str:
         username = check_secure_val(username_cookie_str)
         if username:
-            return True
+            return username
     else:
-        return False
+        return None

@@ -1,6 +1,6 @@
 import re
 
-from model import get_user
+from model import User
 
 
 def valid_username(username):
@@ -25,7 +25,7 @@ def validate(username, password, verify, email):
         template_values.update({'username_error':
                                 'That\'s not a valid username.'})
 
-    if get_user(username):
+    if User.by_name(username):
         template_values.update({'user_exists_error':
                                 'User with this username already exists.'})
 

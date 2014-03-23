@@ -1,6 +1,5 @@
 from simple_handler import SimpleHandler
-from model import get_user, hash_password
-from utils import make_cookie
+from model import User
 
 
 class LoginPage(SimpleHandler):
@@ -8,7 +7,8 @@ class LoginPage(SimpleHandler):
     template = 'login.html'
 
     def get(self):
-        self.render_response(self.template)
+        next_url = self.request.headers.get('referer', '/')
+        self.render_response(self.template, params=None, next_url=next_url)
 
     def post(self):
         ''' This function handles the login form and
@@ -16,23 +16,28 @@ class LoginPage(SimpleHandler):
 
         username = self.request.get('username')
         password = self.request.get('password')
+        next_url = str(self.request.get('next_url'))
 
-        user = get_user(username)
+        user = User.by_name(username)
 
         if user:
+            u = User.login(user.username, password)
 
-            # check if user entered a valid password
-            if user.password == hash_password(username, password, user.salt):
+            if u:
+                self.login(u)
 
-                # set cookie
-                cookie = make_cookie(username)
-                self.response.set_cookie('username', cookie, path='/')
+                print next_url
 
-                self.redirect(self.uri_for('home'))
+                if not next_url or '/login' in next_url:
+                    self.redirect(self.uri_for('home'))
+                else:
+                    self.redirect(next_url)
 
             else:
                 self.render_response(self.template, password_error=
-                                     "Password is not valid. Try again.")
+                                     "Password is not valid. Try again.",
+                                     params=None)
         else:
             self.render_response(self.template, username_error=
-                                 "User username %s doesn't exist." % username)
+                                 "User username %s doesn't exist." % username,
+                                 params=None)

@@ -4,6 +4,8 @@
 
 {% block title %} Login {% endblock %}
 
+{% include 'header.html' %}
+
 {% block content %}
 
 <h2>Enter your credentials:</h2>
@@ -27,6 +29,7 @@
                 </td>
                 <td>
                     <input type="password" name="password">
+                    <input name="next_url" value="{{ next_url }}" style="display: none;"/>
                 </td>
                 <td class="error">
                     {{password_error}}
