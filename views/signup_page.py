@@ -1,5 +1,4 @@
-from model import User
-from utils import validate
+from utils import validate, register
 from simple_handler import SimpleHandler
 
 
@@ -24,7 +23,7 @@ class SignupPage(SimpleHandler):
         if len(errors) != 0:
             self.render_response(self.tempate, params=None, **errors)
         else:
-            u = User.register(username, password, email)
+            u = register(username, password, email)
             u.put()
 
             self.login(u)

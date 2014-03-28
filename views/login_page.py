@@ -1,5 +1,6 @@
 from simple_handler import SimpleHandler
 from model import User
+from utils import login
 
 
 class LoginPage(SimpleHandler):
@@ -21,7 +22,7 @@ class LoginPage(SimpleHandler):
         user = User.by_name(username)
 
         if user:
-            u = User.login(user.username, password)
+            u = login(user.username, password)
 
             if u:
                 self.login(u)
