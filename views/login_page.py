@@ -16,7 +16,7 @@ class LoginPage(SimpleHandler):
 
         username = self.request.get('username')
         password = self.request.get('password')
-        next_url = str(self.request.get('next_url'))
+        next_url = self.request.get('next_url').encode('latin-1', 'ignore')
 
         user = User.by_name(username)
 
@@ -26,10 +26,9 @@ class LoginPage(SimpleHandler):
             if u:
                 self.login(u)
 
-                print next_url
+                if not next_url or '/login' in next_url or next_url == '/':
+                    self.redirect_to('home')
 
-                if not next_url or '/login' in next_url:
-                    self.redirect(self.uri_for('home'))
                 else:
                     self.redirect(next_url)
 

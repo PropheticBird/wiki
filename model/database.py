@@ -27,7 +27,7 @@ class User(db.Model):
     @classmethod
     def login(cls, username, password):
         u = cls.by_name(username)
-        if u and u.password == hash_password(username, password, u.salt):
+        if u and u.password == hash_password(password, u.salt):
             return u
         else:
             return None
@@ -36,7 +36,7 @@ class User(db.Model):
     def register(cls, username, password, email=None):
         uid = generate_uid(username)
         salt = make_salt()
-        password = hash_password(username, password, salt)
+        password = hash_password(password, salt)
         return User(parent=user_key(),
                     keyname=uid,
                     username=username,
@@ -57,8 +57,8 @@ def make_salt():
     return ''.join(random.choice(letters) for c in range(5))
 
 
-def hash_password(username, password, salt):
-    return hashlib.md5(username + password + salt + SECRET).hexdigest()
+def hash_password(password, salt):
+    return hashlib.md5(password + salt + SECRET).hexdigest()
 
 
 # Wiki Pages

@@ -29,4 +29,4 @@ class SignupPage(SimpleHandler):
 
             self.login(u)
 
-            self.redirect(self.uri_for('home'))
+            self.redirect_to('home')
