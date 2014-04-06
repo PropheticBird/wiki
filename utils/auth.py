@@ -2,7 +2,7 @@ import hashlib
 import random
 from string import letters
 
-from model import User, user_key
+from model import User
 from constants import SECRET
 
 
@@ -18,8 +18,7 @@ def register(username, password, email=None):
     uid = generate_uid(username)
     salt = make_salt()
     password = hash_password(password, salt)
-    return User(parent=user_key(),
-                keyname=uid,
+    return User(keyname=uid,
                 username=username,
                 password=password,
                 salt=salt,

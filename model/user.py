@@ -8,14 +8,10 @@ class User(db.Model):
     email = db.StringProperty()
 
     @classmethod
-    def by_id(cls, uid):
-        return User.get_by_id(uid, parent=user_key())
-
-    @classmethod
     def by_name(cls, username):
         u = User.all().filter('username =', username).get()
         return u
 
-
-def user_key(group='default'):
-    return db.Key.from_path('User', group)
+    @classmethod
+    def by_id(cls, uid):
+        return cls.get_by_id(uid)

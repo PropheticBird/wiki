@@ -11,33 +11,28 @@
 <h2>Enter your credentials:</h2>
 
 <form method="post">
-    <table>
-        <tbody>
-            <tr>
-                <td class="label">
-                    Username
-                </td>
-                <td>
-                    <input type="text" name="username">
-                <td class="error_valid_username">
-                    {{username_error}}
-                </td>
-            </tr>
-            <tr>
-                <td class="label">
-                    Password
-                </td>
-                <td>
-                    <input type="password" name="password">
-                    <input name="next_url" value="{{ next_url }}" style="display: none;"/>
-                </td>
-                <td class="error">
-                    {{password_error}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+
+    <div>
+
+       <div class="label">Username</div>
+        <div>
+            <input type="text" name="username" placeholder="Username">
+            <div class="error"> {{username_error}} </div>
+        </div>
+
+        <div class="label">Password</div>
+        <div>
+            <input type="password" name="password" placeholder="Password">
+            <div class="error"> {{password_error}} </div>
+        </div>
+
+        <div>
+            <input name="next_url" value="{{ next_url }}" style="display: none;"/>
+        </div>
+    </div>
+
     <input type="submit" value="Signup">
+
 </form>
 
 <div> New user? Register <a href="/wiki/signup">here.</a></div>

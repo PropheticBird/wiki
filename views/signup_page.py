@@ -22,6 +22,7 @@ class SignupPage(SimpleHandler):
 
         if len(errors) != 0:
             self.render_response(self.tempate, params=None, **errors)
+
         else:
             u = register(username, password, email)
             u.put()

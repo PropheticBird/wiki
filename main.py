@@ -1,5 +1,6 @@
 # coding: utf-8
 import logging
+import os
 
 import webapp2
 from webapp2_extras import routes
@@ -8,16 +9,23 @@ import views
 from constants import PAGE_RE
 
 
+#check if application runs on GAE or locally
+if os.environ['SERVER_SOFTWARE'].startswith('Development'):
+    isDEV = True
+else:
+    isDEV = False
+
+
 def handle_404(request, response, exception):
     logging.exception(exception)
+    response.write(' <br> <h3> Error: %s </h3>' % exception)
     response.set_status(404)
-    response.write('<h1> Requested resource was not found </h1>')
 
 
 def handle_500(request, response, exception):
     logging.exception(exception)
+    response.write(' <br> <h3> Error: %s </h3>' % exception)
     response.set_status(500)
-    response.write('<h3> Server error, try again later </h3>')
 
 
 app = webapp2.WSGIApplication([
@@ -32,7 +40,7 @@ app = webapp2.WSGIApplication([
         webapp2.Route(r'/_edit/<link:{0}>'.format(PAGE_RE),
                       handler=views.EditPage, name='edit')]
     )
-], debug=True)
+], debug=isDEV)
 
 app.error_handlers[404] = handle_404
 app.error_handlers[500] = handle_500

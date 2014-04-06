@@ -32,4 +32,3 @@ class SimpleHandler(webapp2.RequestHandler):
         webapp2.RequestHandler.initialize(self, *a, **kw)
         uid = read_cookie(self, 'username')
         self.user = uid and User.by_id(int(uid))
-

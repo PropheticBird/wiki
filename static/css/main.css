@@ -1,8 +1,8 @@
 body {
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: Georgia, sans-serif;
     font-size: 14px;
 
-    width: 800px;
+    width: 600px;
     margin: 0 auto;
     padding: 10px;
     color: #333;
@@ -20,18 +20,8 @@ h2 {
 
 label {
   display: block;
+  margin: 10px 10px 10px 10px;
   font-size: 20px;
-}
-
-label + label {
-    margin-top: 20px;
-}
-
-input[type=text] {
-    width: 500px;
-    font-size: 20px;
-    padding: 2px;
-    font-family: monospace;
 }
 
 textarea {
@@ -39,10 +29,6 @@ textarea {
   height: 400px;
   font-size: 17px;
   font-family: monospace;
-}
-
-input[type=submit] {
-  font-size: 24px;
 }
 
 .main-title {
@@ -53,52 +39,6 @@ input[type=submit] {
     text-align: center;
     margin-bottom: 30px;
     text-decoration: none;
-}
-
-.post + .post {
-    margin-top: 15px;
-}
-
-.post-heading {
-    position: relative;
-    border-bottom: 3px solid #900;
-}
-
-.post-title {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.post-date {
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    color: #999;
-
-}
-
-.post-content {
-    margin-top: 5px;
-}
-
-#error {
-    width: 40%;
-    max-width: 400px;
-    min-width
-    height: 20%;
-    min-height: 170px;
-    max-height: 400px;
-
-    margin: 8% auto;
-
-    border: 6px solid #C6263E;
-
-    padding: 20px;
-
-    font-family: Arial, Helvetica, sans-serif;
-
-    color: #AC292E;
-    background-color: #fefefe;
 }
 
 #controls {

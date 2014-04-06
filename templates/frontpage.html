@@ -1,0 +1,25 @@
+<html>
+
+{% extends "base.html" %}
+
+{% block title %} Wiki {% endblock %}
+
+{% include "header.html" %}
+
+{% block content %}
+
+    <div>
+
+        <div id="front_title">So, this is what we have so far...</div>
+
+        <ul>
+            {% for page in pages %}
+                <li><a href="{{page.link}}">{{page.link}}</a></li>
+            {% endfor %}
+        </ut>
+
+    </div>
+
+{% endblock %}
+
+</html>

@@ -4,6 +4,8 @@ from model import Page
 
 class EditPage(SimpleHandler):
 
+    template = 'newpage.html'
+
     def get(self, link):
 
         if not self.user:
@@ -20,21 +22,28 @@ class EditPage(SimpleHandler):
             'link_lio': self.uri_for('logout')
         }
 
-        self.render_response('newpage.html', page=page, params=params)
+        self.render_response(self.template, page=page, params=params)
 
     def post(self, link):
         if not self.user:
             self.notfound()
 
         content = self.request.get('content')
-        print content
 
         if content:
-            p = Page(parent=Page.parent_key(link), link=link, content=content)
+
+            p = Page.by_path(link)
+
+            if p:
+                p.content = content
+            else:
+                p = Page(link=link, content=content)
+
             p.put()
 
             self.redirect_to('wiki', link=link)
 
         else:
             error = 'You must add some content before submitting.'
-            self.render_response('newpage.html', error=error)
+            self.render_response(self.template, error=error, params=None,
+                                 page=None)
